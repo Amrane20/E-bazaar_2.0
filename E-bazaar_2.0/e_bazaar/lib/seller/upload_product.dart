@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/allCatigories.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
@@ -16,26 +18,16 @@ class uploadPage extends StatefulWidget {
 
 class _uploadPageState extends State<uploadPage> {
   int current = 0;
-  XFile? _file;
-Future<void> _pickImage() async {
-  try {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final image = File(pickedFile.path);
-      final reducedImage = await FlutterNativeImage.compressImage(
-        image.path,
-        quality: 80,
-        targetHeight: 800,
-        targetWidth: 800,
-      );
-      print(reducedImage.path);
-    }
-  } catch (e) {
-    print('Error picking image: $e');
-  }
-}
-
-
+  XFile? file;
+  String? filename;
+  List<String>? parts;
+  String? fileExtension;
+  String imageUrl = '';
+  bool uploadedImg = false;
+  GlobalKey<FormState> uploadKey = GlobalKey();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _price = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -64,21 +56,72 @@ Future<void> _pickImage() async {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      onPressed: _pickImage,
-                     icon: Icon(Icons.cloud_upload_rounded,
-                      size: 30,
-                      color: Color(0xff2F4858),
-                    ),),
+                      onPressed: () async {
+                        ImagePicker imgPicker = ImagePicker();
+                        // get the image file
+                        file = await imgPicker.pickImage(
+                            source: ImageSource.camera);
+                        if (file != null) {
+                          setState(() {
+                            uploadedImg = true;
+                          });
+                        } else {
+                          setState(() {
+                            uploadedImg = false;
+                          });
+                        }
+
+                        filename = file?.name;
+                        parts = filename?.split('.');
+                        fileExtension = parts?.last;
+                        print("==========");
+                        print(uploadedImg);
+                        print("============");
+                        print(file?.path);
+                        // upload the image file to firebase
+                        String uniqueFileName =
+                            DateTime.now().millisecondsSinceEpoch.toString();
+
+                        //Get a reference to storage root
+                        Reference referenceRoot =
+                            FirebaseStorage.instance.ref();
+                        Reference referenceDirImages =
+                            referenceRoot.child('products');
+
+                        //Create a reference for the image to be stored
+                        Reference referenceImageToUpload =
+                            referenceDirImages.child(uniqueFileName);
+
+                        //Handle errors/success
+                        try {
+                          //Store the file
+                          await referenceImageToUpload
+                              .putFile(File(file!.path));
+                          //Success: get the download URL
+                          imageUrl =
+                              await referenceImageToUpload.getDownloadURL();
+                        } catch (error) {
+                          //Some error occurred
+                        }
+                      },
+                      icon: Icon(
+                        Icons.cloud_upload_rounded,
+                        size: 30,
+                        color: Color(0xff2F4858),
+                      ),
+                    ),
                     RichText(
                       text: TextSpan(
-                          text: "choose file ",
+                          text: file != null ? "$filename" : "choose file ",
                           style: GoogleFonts.montserrat(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: Color(0xffBD532A)),
                           children: [
                             TextSpan(
-                                text: "to upload",
+                                text: file != null
+                                    ? ".$fileExtension"
+                                    : "to upload ",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w600,
@@ -182,127 +225,162 @@ Future<void> _pickImage() async {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+          Form(
+            key: uploadKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Product Title",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Container(
-                  height: 50.0,
-                  child: TextFormField(
-                    cursorColor: Color(0xff2F4858),
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                      disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                    text: TextSpan(
-                        text: "Product Title ",
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Product Title",
                         style: GoogleFonts.montserrat(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
-                        children: [
-                      TextSpan(
-                        text: "(optional)",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(153, 0, 0, 0)),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 50.0,
+                        child: TextFormField(
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the title ';
+                            }
+
+                            return null;
+                          },
+                          controller: _titleController,
+                          cursorColor: Color(0xff2F4858),
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                          ),
+                        ),
                       )
-                    ])),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Container(
-                  height: 50.0,
-                  child: TextFormField(
-                    cursorColor: Color(0xff2F4858),
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                      disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Description",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                          text: TextSpan(
+                              text: "Product price ",
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black),
+                              children: [
+                            TextSpan(
+                              text: "(optional)",
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(153, 0, 0, 0)),
+                            )
+                          ])),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 50.0,
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the title ';
+                            }
+
+                            return null;
+                          },
+                          controller: _price,
+                          cursorColor: Color(0xff2F4858),
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Container(
-                  height: 100.0,
-                  child: TextFormField(
-                    minLines: 2,
-                    maxLines: 5,
-                    keyboardType: TextInputType.multiline,
-                    cursorColor: Color(0xff2F4858),
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                      disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(153, 47, 72, 88))),
-                    ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Description",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 100.0,
+                        child: TextFormField(
+                          controller: _descriptionController,
+                          minLines: 2,
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
+                          cursorColor: Color(0xff2F4858),
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(153, 47, 72, 88))),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the description';
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -392,18 +470,46 @@ Future<void> _pickImage() async {
                   width: 10.0,
                 ),
                 Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(20.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
-                      color: Color(0xffBD532A),
+                  child: InkWell(
+                    onTap: () async {
+                      if (uploadKey.currentState!.validate() &&
+                          imageUrl.isNotEmpty) {
+                        String title = _titleController.text;
+                        String price = _price.text;
+                        String description = _descriptionController.text;
+
+                        CollectionReference _reference =
+                            FirebaseFirestore.instance.collection('products');
+                        Map<String, dynamic> dataToSend = {
+                          'catigorie': 'catigories/dCmzqlWgXefVgqd73BDH',
+                          'description': description,
+                          'name': title,
+                          'price': price,
+                          'productInStock': 5,
+                          'sellerId': 'seller1',
+                          'image': imageUrl,
+                        };
+
+                        //Add a new item
+                        _reference.add(dataToSend);
+                      } else {
+                        // empty imageUrl error
+                        print("please upload the image");
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50.0),
+                        color: Color(0xffBD532A),
+                      ),
+                      child: Center(
+                          child: Text(
+                        "Upload",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16.0, fontWeight: FontWeight.w600),
+                      )),
                     ),
-                    child: Center(
-                        child: Text(
-                      "Upload",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16.0, fontWeight: FontWeight.w600),
-                    )),
                   ),
                 )
               ],
