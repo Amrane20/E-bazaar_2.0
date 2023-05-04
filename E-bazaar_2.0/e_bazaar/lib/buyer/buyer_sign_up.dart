@@ -14,13 +14,23 @@ import 'package:flutter_application_1/widget/lastNameFieldWidget.dart';
 import 'package:flutter_application_1/widget/passwordFieldWidget.dart';
 import 'package:flutter_application_1/widget/storeFieldWidget.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../seller/seller_sign_up.dart';
 
 GlobalKey<FormState> buyerFormState = new GlobalKey<FormState>();
+GlobalKey<ScaffoldState> buyerScaffold = GlobalKey<ScaffoldState>();
 Buyer buyer = new Buyer();
 
+
 buyer_signUp() async {
+    BuildContext? dialogContext = accountType == Account.buyer? buyerScaffold.currentContext : scaffoldKey.currentContext ;
+  showDialog(
+    context: dialogContext!,
+    builder: (context) {
+      return Center(
+        child: CircularProgressIndicator(color: Color(0xffBD532A)),
+      );
+    },
+  );
   var formData = buyerFormState.currentState;
   if (formData!.validate()) {
     formData.save();
@@ -46,6 +56,7 @@ buyer_signUp() async {
   } else {
     print("not valide");
   }
+  Navigator.of(dialogContext).pop();
 }
 
 createBuyerDocument() async {
@@ -77,7 +88,7 @@ class buyerSignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
       var myInputStyle = GoogleFonts.lato(fontSize: 16, color: Colors.white54);
     return Scaffold(
-      key: scaffoldKey,
+      key: buyerScaffold,
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(

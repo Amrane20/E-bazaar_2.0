@@ -37,7 +37,7 @@ void main() async{
   await Firebase.initializeApp();
   runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: uploadPage(),
+    home: accType(),
     routes: {
       '/home_page' :(BuildContext context) => homePage(),
        '/seller_signUp_Page' :(BuildContext context) => sellerSignUpPage(),

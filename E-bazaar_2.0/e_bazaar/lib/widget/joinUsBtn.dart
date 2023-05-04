@@ -22,7 +22,7 @@ class joinUsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        UserCredential response = accountType == Account.seller
+        var response = accountType == Account.seller
             ? await signUp()
             : await buyer_signUp(); 
             // check the account type first then decide wich sign up function we'll use

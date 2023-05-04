@@ -24,9 +24,9 @@ class callActionBtn extends StatelessWidget {
           var response = await signIn();
           if (response != null) {
             if (accountType == Account.buyer) {
-              Navigator.of(context).pushNamed('/buyer_home_page');
+              Navigator.of(context).pushReplacementNamed('/buyer_home_page');
             } else if (accountType == Account.seller) {
-              Navigator.of(context).pushNamed('/seller_home_page');
+              Navigator.of(context).pushReplacementNamed('/seller_home_page');
             } else {
               null;
             }

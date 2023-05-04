@@ -5,8 +5,8 @@ import '../accountType.dart';
 import '../buyer/buyer_sign_up.dart';
 import '../seller/seller_sign_up.dart';
 
-
 String? email;
+
 class emailField extends StatelessWidget {
   final Color borderColor;
   final Color lableTxtColor;
@@ -15,8 +15,7 @@ class emailField extends StatelessWidget {
       {super.key,
       this.borderColor = Colors.white54,
       this.lableTxtColor = Colors.white54,
-      this.inputStyle
-      });
+      this.inputStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +24,15 @@ class emailField extends StatelessWidget {
       child: TextFormField(
         style: inputStyle,
         onSaved: (newValue) {
-          accountType ==  Account.seller ? seller.email = newValue : buyer.email = newValue;
+          accountType == Account.seller
+              ? seller.email = newValue
+              : buyer.email = newValue;
           email = newValue;
         },
         validator: (value) {
-          
+          if (value == null) {
+            return "email cannot be empty";
+          }
         },
         cursorColor: Colors.white54,
         decoration: InputDecoration(

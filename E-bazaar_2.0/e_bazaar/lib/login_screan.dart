@@ -9,10 +9,11 @@ import 'package:flutter_application_1/widget/passwordFieldWidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 bool isRegistered = false;
+
 GlobalKey<FormState> loginState = new GlobalKey<FormState>();
 
 signIn() async {
-  BuildContext? dialogContext = scaffoldKey.currentContext;
+  BuildContext? dialogContext = accountType == Account.buyer? buyerScaffold.currentContext : scaffoldKey.currentContext ;
   showDialog(
     context: dialogContext!,
     builder: (context) {
