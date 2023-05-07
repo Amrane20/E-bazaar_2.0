@@ -33,7 +33,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
 void main() async{
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: LiquidSwipe(
-        enableLoop: false,
+        enableLoop: false, // defaoult value true 
         slideIconWidget: Icon(
           Icons.arrow_back_ios,
           color: Colors.white54,

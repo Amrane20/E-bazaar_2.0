@@ -12,7 +12,9 @@ class sellerProfilePage extends StatelessWidget {
       backgroundColor: Color(0xffE7E7E7),
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Icon(
@@ -134,7 +136,11 @@ class sellerProfilePage extends StatelessWidget {
               labelTxt: "Store name",
               fieldWidth: double.infinity,
             ),
-            roundedBtn(btnTxt: "Change  Payment info",verticalPadding: 20.0,verticalMargin: 20.0,)
+            roundedBtn(
+              btnTxt: "Change  Payment info",
+              verticalPadding: 20.0,
+              verticalMargin: 20.0,
+            )
           ],
         ),
       ),

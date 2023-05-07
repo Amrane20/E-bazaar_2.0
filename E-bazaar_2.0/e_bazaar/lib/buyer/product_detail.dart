@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/accountType.dart';
 import 'package:flutter_application_1/buyer/home_page.dart';
 import 'package:flutter_application_1/buyer/product_cart.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +37,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   fit: BoxFit.cover,
                 ),
               ),
-
               // the black banner behind "Order Details"
               Container(
                 width: double.infinity,
@@ -77,14 +77,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          if (isFavorited == true) {
-                            isFavorited = false;
-                          } else {
-                            isFavorited = true;
-                          }
-                          //isFavorited=true;
-                        });
+                        accountType != Account.guest
+                            ? setState(() {
+                                if (isFavorited == true) {
+                                  isFavorited = false;
+                                } else {
+                                  isFavorited = true;
+                                }
+                                //isFavorited=true;
+                              })
+                            : print("you have to login to like");
                         print(isFavorited);
                       },
                       child: Container(
@@ -99,7 +101,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           isFavorited
                               ? Icons.favorite_rounded
                               : Icons.favorite_border_rounded,
-                              size: isFavorited ? 30.0 : 25.0,
+                          size: isFavorited ? 30.0 : 25.0,
                         )),
                       ),
                     ),
@@ -140,26 +142,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ],
                 ),
               ),
-               /* 
-              SizedBox(
-                width: 55.0,
-              ),
-            Expanded(
-                child: IconButton(
-                  onPressed: () {
-                    if (isFavorited == true) {
-                      isFavorited = false;
-                    } else {
-                      isFavorited = true;
-                    }
-                  },
-                  color: isFavorited ? Colors.red : Colors.black,
-                  icon: isFavorited
-                      ? Icon(Icons.favorite_rounded)
-                      : Icon(Icons.favorite_border_rounded),
-                  iconSize: 30.0,
-                ),
-              )*/
             ],
           ),
         ),
@@ -210,7 +192,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Verginia. ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Verginia. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Verginia. ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Verginia. ",
                   style: GoogleFonts.lato(
                       height: 1.4,
-                      color: Color.fromARGB(192, 0, 0, 0),
+                      color: const Color.fromARGB(192, 0, 0, 0),
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -220,50 +202,64 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     left: 12.0, right: 12.0, top: 14.0, bottom: 14.0),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(25, 15, 25, 15),
-                        // padding: EdgeInsets.all(20.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
-                            border: Border.all(color: Color(0xffBD532A))),
-                        child: Center(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.shopping_cart_outlined,
-                                color: Color(0xff2F4858),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Text(
-                                "Add to cart",
-                                style: GoogleFonts.montserrat(
-                                    color: Color(0xff2F4858),
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
+                    InkWell(
+                      onTap: () {
+                        accountType != Account.guest
+                            ? print("payment cheack page")
+                            : print("you have to log in");
+                      },
+                      child: Expanded(
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(25, 15, 25, 15),
+                          // padding: EdgeInsets.all(20.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              border: Border.all(color: Color(0xffBD532A))),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.shopping_cart_outlined,
+                                  color: Color(0xff2F4858),
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  "Add to cart",
+                                  style: GoogleFonts.montserrat(
+                                      color: Color(0xff2F4858),
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10.0,
                     ),
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.all(20.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
-                          color: Color(0xffBD532A),
+                      child: InkWell(
+                        onTap: () {
+                          accountType != Account.guest
+                              ? print("payment cheack page")
+                              : print("you have to log in");
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(20.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: Color(0xffBD532A),
+                          ),
+                          child: Center(
+                              child: Text(
+                            "Buy now",
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600),
+                          )),
                         ),
-                        child: Center(
-                            child: Text(
-                          "Buy now",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600),
-                        )),
                       ),
                     )
                   ],
@@ -272,59 +268,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ],
           ),
         ),
-        // // Call to action btns
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0),
-        //   child: Row(
-        //     children: [
-        //       Expanded(
-        //         child: Container(
-        //           padding: EdgeInsets.fromLTRB(25, 15, 25, 15),
-        //           // padding: EdgeInsets.all(20.0),
-        //           decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(50.0),
-        //               border: Border.all(color: Color(0xffBD532A))),
-        //           child: Center(
-        //             child: Row(
-        //               children: [
-        //                 Icon(
-        //                   Icons.shopping_cart_outlined,
-        //                   color: Color(0xff2F4858),
-        //                 ),
-        //                 SizedBox(
-        //                   width: 5.0,
-        //                 ),
-        //                 Text(
-        //                   "Add to cart",
-        //                   style: GoogleFonts.montserrat(
-        //                       color: Color(0xff2F4858),
-        //                       fontWeight: FontWeight.w500),
-        //                 )
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //       SizedBox(
-        //         width: 10.0,
-        //       ),
-        //       Expanded(
-        //         child: Container(
-        //           padding: EdgeInsets.all(20.0),
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(50.0),
-        //             color: Color(0xffBD532A),
-        //           ),
-        //           child: Center(
-        //               child: Text(
-        //             "Buy now",
-        //             style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
-        //           )),
-        //         ),
-        //       )
-        //     ],
-        //   ),
-        // )
       ],
     ));
   }

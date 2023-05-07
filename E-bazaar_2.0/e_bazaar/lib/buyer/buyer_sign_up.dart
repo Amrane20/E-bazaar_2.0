@@ -61,18 +61,18 @@ buyer_signUp() async {
 
 createBuyerDocument() async {
   try {
-    CollectionReference sellersRef =
+    CollectionReference buyerRef =
         FirebaseFirestore.instance.collection('buyers');
-    String sellerId = buyer.userId;
-    Map<String, dynamic> sellerData = {
-      'adress': adress, // John Doe
-      'phoneNumber': phoneNumber, // Stokes and Sons
-      'firstName': firstName, // 42
-      'lastName': lastName,
-      'location' : "ait kdif",
+    String buyerID = buyer.userId;
+    Map<String, dynamic> buyerData = {
+      'adress': buyer.adress, // John Doe
+      'phoneNumber': buyer.phoneNumber, // Stokes and Sons
+      'firstName': buyer.firstName, // 42
+      'lastName': buyer.lastName,
+      'location' : buyer.location,
     };
-    await sellersRef.doc(sellerId).set(sellerData);
-    print('New Buyer created with ID: $sellerId');
+    await buyerRef.doc(buyerID).set(buyerData);
+    print('New Buyer created with ID: $buyerID');
   } catch (error) {
     print('Error creating seller document: $error');
   }
@@ -102,7 +102,6 @@ class buyerSignUpPage extends StatelessWidget {
           key: buyerFormState,
           child: ListView(
             physics: BouncingScrollPhysics(),
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 0),

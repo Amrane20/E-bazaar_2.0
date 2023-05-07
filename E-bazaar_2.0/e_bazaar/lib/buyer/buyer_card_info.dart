@@ -12,7 +12,9 @@ class buyerCardInfo extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: Padding(
               padding: const EdgeInsets.only(left: 15.0),
               child: Icon(

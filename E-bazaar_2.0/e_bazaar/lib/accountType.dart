@@ -6,9 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 enum Account {
   seller,
   buyer,
+  guest,
 }
 
-var accountType;
+var accountType; // to cheak wich account is selected
 
 class accType extends StatelessWidget {
   accType({
@@ -18,87 +19,93 @@ class accType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var wid = double.infinity;
-    return Container(
-      child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            color: Colors.white54,
+    return Scaffold(
+      backgroundColor: Color(0xffE7E7E7),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/images/logo01.png",
+            width: 400,
+            height: 400,
+            fit: BoxFit.cover,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/logo01.png",
-                width: 400,
-                height: 400,
-                fit: BoxFit.cover,
+          InkWell(
+            onTap: () {
+              accountType = Account.seller;
+              Navigator.of(context).pushReplacementNamed('/seller_signUp_Page');
+              print(accountType);
+            },
+            child: Container(
+              width: 250,
+              height: 48.0,
+              decoration: BoxDecoration(
+                color: Color(0xffBD532A),
+                borderRadius: BorderRadius.circular(50.0),
               ),
-              InkWell(
-                onTap: () {
-                  accountType = Account.seller;
-                  Navigator.of(context)
-                      .pushReplacementNamed('/seller_signUp_Page');
-                  print(accountType);
-                },
-                child: Container(
-                  width: 250,
-                  height: 48.0,
-                  decoration: BoxDecoration(
-                    // gradient: LinearGradient(
-                    //     begin: Alignment.topLeft,
-                    //     end: Alignment.bottomRight,
-                    //     colors: [
-                    //       Color(0xffBD532A),
-                    //       Color(0xff281F20),
-                    //     ]),
-                    color: Color(0xffBD532A),
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  child: Center(
-                      child: Text(
-                    "Seller Account",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 16.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )),
+              child: Center(
+                  child: Text(
+                "Seller Account",
+                style: GoogleFonts.montserrat(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
                 ),
-              ),
-              SizedBox(
-                height: 24.0,
-              ),
-              InkWell(
-                onTap: () {
-                  accountType = Account.buyer;
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => buyerSignUpPage()));
-                  print(accountType);
-                },
-                child: Container(
-                  width: 250,
-                  height: 48.0,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
-                      border: Border.all(color: Color(0xffBD532A), width: 1.5)),
-                  child: Center(
-                      child: Text(
-                    "Buyer Account",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 16.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )),
-                ),
-              ),
-            ],
+              )),
+            ),
           ),
-        ),
+          SizedBox(
+            height: 24.0,
+          ),
+          InkWell(
+            onTap: () {
+              accountType = Account.buyer;
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => buyerSignUpPage()));
+              print(accountType);
+            },
+            child: Container(
+              width: 250,
+              height: 48.0,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50.0),
+                  border: Border.all(color: Color(0xffBD532A), width: 1.5)),
+              child: Center(
+                  child: Text(
+                "Buyer Account",
+                style: GoogleFonts.montserrat(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              )),
+            ),
+          ),
+          const SizedBox(
+            height: 48.0,
+          ),
+          InkWell(
+            onTap: () {
+              accountType = Account.guest;
+              Navigator.of(context).pushNamed('/home_page');
+              print(accountType);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Skip for now",
+                  style: GoogleFonts.montserrat(fontSize: 18.0),
+                ),
+                SizedBox(
+                  width: 7.0,
+                ),
+                Icon(Icons.keyboard_arrow_right_rounded)
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

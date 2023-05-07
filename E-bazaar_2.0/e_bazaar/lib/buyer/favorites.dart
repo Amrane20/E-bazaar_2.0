@@ -7,31 +7,39 @@ class favoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffE7E7E7),
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async {
+        return false; // this will stop or block going back to the previous page
+      },
+      child: Scaffold(
         backgroundColor: Color(0xffE7E7E7),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: Text(
-            "Favorite",
-            style: GoogleFonts.montserrat(
-                color: Colors.black, fontSize: 22, fontWeight: FontWeight.w500),
+        appBar: AppBar(
+          backgroundColor: Color(0xffE7E7E7),
+          title: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Text(
+              "Favorite",
+              style: GoogleFonts.montserrat(
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500),
+            ),
           ),
+          centerTitle: true,
+          elevation: 0,
         ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: ListView(
-        physics: BouncingScrollPhysics(
+        body: ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            SizedBox(
+              height: 40.0,
+            ),
+            favoriteCart(),
+            favoriteCart(),
+            favoriteCart(),
+            favoriteCart()
+          ],
         ),
-        children: [
-          SizedBox(height: 40.0,),
-         favoriteCart(),
-         favoriteCart(),
-         favoriteCart(),
-         favoriteCart()
-        ],
       ),
     );
   }

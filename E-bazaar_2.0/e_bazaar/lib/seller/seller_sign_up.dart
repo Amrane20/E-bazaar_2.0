@@ -61,10 +61,10 @@ createSellerDocument() async {
         FirebaseFirestore.instance.collection('sellers');
     String sellerId = seller.userId;
     Map<String, dynamic> sellerData = {
-      'adress': adress, // John Doe
-      'phoneNumber': phoneNumber, // Stokes and Sons
-      'firstName': firstName, // 42
-      'lastName': lastName,
+      'adress': seller.adress, // John Doe
+      'phoneNumber': seller.phoneNumber, // Stokes and Sons
+      'firstName': seller.firstName, // 42
+      'lastName': seller.lastName,
       'store': {
         'storeName': storeName,
         'storeImage': 'https://example.com/store-image.jpg'
@@ -75,6 +75,11 @@ createSellerDocument() async {
   } catch (error) {
     print('Error creating seller document: $error');
   }
+}
+
+getUser() async {
+  var usr = await FirebaseAuth.instance.currentUser;
+  print(usr?.email);
 }
 
 class sellerSignUpPage extends StatefulWidget {

@@ -6,26 +6,30 @@ import 'package:flutter_application_1/seller/seller_sign_up.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 String? firstName;
+
 class firstNameField extends StatelessWidget {
   final inputStyle;
-  const firstNameField({super.key,this.inputStyle});
+  const firstNameField({super.key, this.inputStyle});
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.fromLTRB(26.0, 0, 26.0, 0),
       child: TextFormField(
         style: inputStyle,
         onSaved: (newValue) {
-        accountType==  Account.seller ? seller.firstName = newValue : buyer.firstName = newValue;
+          accountType == Account.seller
+              ? seller.firstName = newValue
+              : buyer.firstName = newValue;
           firstName = newValue;
-          
         },
+       
         validator: (value) {
-          if(value!.isEmpty){
-             return "can't be empty";
+          if (value!.isEmpty) {
+            return "can't be empty";
           }
         },
+
         cursorColor: Colors.white54,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 24.0),

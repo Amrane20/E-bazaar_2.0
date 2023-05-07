@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/accountType.dart';
 import 'package:flutter_application_1/buyer/my_cart.dart';
 import 'package:flutter_application_1/buyer/product_cart.dart';
 import 'package:flutter_application_1/models/allCatigories.dart';
@@ -38,7 +39,7 @@ class _homePageState extends State<homePage> {
             children: [
               Container(
                 //height: MediaQuery.of(context).size.height*0.56,
-               // color: Color.fromARGB(255, 189, 150, 35),
+                // color: Color.fromARGB(255, 189, 150, 35),
                 child: Column(
                   children: [
                     Padding(
@@ -51,13 +52,21 @@ class _homePageState extends State<homePage> {
                             style: GoogleFonts.montserrat(
                                 fontSize: 16.0, fontWeight: FontWeight.w500),
                           ),
-                          Text(
-                            "Bourane",
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20.0,
-                                color: Color(0xffBD532A)),
-                          )
+                          accountType == Account.guest
+                              ? Text(
+                                  "To e-bazaar",
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.0,
+                                      color: Color(0xffBD532A)),
+                                )
+                              : Text(
+                                  "Bourane",
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20.0,
+                                      color: Color(0xffBD532A)),
+                                )
                         ],
                       ),
                     ),
@@ -105,16 +114,20 @@ class _homePageState extends State<homePage> {
                             padding: const EdgeInsets.only(right: 10.0),
                             child: InkWell(
                               onTap: () {
-                                 Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => myCartPage()));
-                                print("cart taped");
+                                // cheack if the type of the account is guest or buyer
+                                accountType != Account.guest
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => myCartPage()))
+                                    : print("you have to login");
                               },
                               child: Container(
                                 height: 40,
                                 width: 48,
                                 child: Stack(
                                   children: [
-                                    Positioned(
+                                    const Positioned(
                                       top: 10,
                                       child: Icon(
                                         Icons.shopping_cart_outlined,
@@ -235,7 +248,8 @@ class _homePageState extends State<homePage> {
                                               ? Color(0xffBD532A)
                                               : Colors.transparent)),
                                   child: Center(
-                                      child: Text(Allcatigories.listCatigories[index],
+                                      child: Text(
+                                          Allcatigories.listCatigories[index],
                                           style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w500,
                                               fontSize: current == index
@@ -274,43 +288,70 @@ class _homePageState extends State<homePage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10.0,)
+                    SizedBox(
+                      height: 10.0,
+                    )
                   ],
                 ),
               ),
               Expanded(
-                 /* margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height*0.34,
-                  // color: Color(0xffBD532A),
-                  // color: Colors.amber,*/
                   child: Center(
-                    child: ListView(
-                      padding: EdgeInsets.only(left: 15.0,top: 0.0),
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
+                child: ListView(
+                  padding: EdgeInsets.only(left: 15.0, top: 0.0),
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        productCart(),
-                        SizedBox(
-                          height: 24.0,
+                        singleProduct(imageUrl: "assets/images/carpet.png"),
+                        const SizedBox(
+                          width: 16.0,
                         ),
-                        productCart(),
-                         SizedBox(
-                          height: 24.0,
-                        ),
-                         productCart(),
-                        SizedBox(
-                          height: 24.0,
-                        ),
-                        productCart(),
-                        SizedBox(
-                          height: 24.0,
-                        ),
-                        productCart()
+                        singleProduct(
+                          imageUrl: "assets/images/pro1.jpg",
+                        )
                       ],
                     ),
-                  ))
+                    const SizedBox(
+                      height: 24.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        singleProduct(imageUrl: "assets/images/carpet.png"),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        singleProduct(
+                          imageUrl: "assets/images/pro1.jpg",
+                        )
+                      ],
+                    ),
+/*
+                    productCart(imageUrl: "assets/images/carpet.png"),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    productCart(imageUrl: "assets/images/pro1.jpg"),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    productCart(imageUrl: "assets/images/pro2.jpg"),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    productCart(imageUrl: "assets/images/carpet.png"),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    productCart(
+                      imageUrl: "assets/images/carpet.png",
+                    )
+                    */
+                  ],
+                ),
+              ))
             ],
           ),
         ),

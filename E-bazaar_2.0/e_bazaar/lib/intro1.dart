@@ -17,7 +17,7 @@ class intro1 extends StatelessWidget {
     var wid = double.infinity;
     return Container(
       child: Container(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height, 
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,

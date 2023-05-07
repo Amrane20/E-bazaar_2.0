@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/accountType.dart';
@@ -24,34 +23,30 @@ class joinUsButton extends StatelessWidget {
       onTap: () async {
         var response = accountType == Account.seller
             ? await signUp()
-            : await buyer_signUp(); 
-            // check the account type first then decide wich sign up function we'll use
+            : await buyer_signUp();
+        // check the account type first then decide wich sign up function we'll use
         print("==============================");
         if (response != null) {
-          //userId = response.user!.userId;
           seller.userId = response.user!.uid;
+          buyer.userId = response.user!.uid;
           if (accountType == Account.seller) {
-             createSellerDocument();
-             seller.showInfo();
-          } else if (accountType == Account.buyer){
+            createSellerDocument();
+            seller.showInfo();
+            Navigator.of(context).pushReplacementNamed('/logIn_Page');
+          } else if (accountType == Account.buyer) {
             createBuyerDocument();
             buyer.showInfo();
-          } 
+            print(buyer.userId);
+            Navigator.of(context).pushReplacementNamed('/logIn_Page');
+          }
           print("/////////////////////");
-          print(seller.userId);
           print("seller : ${seller.firstName}");
           print("buyer : ${buyer.firstName}");
           print("/////////////////////");
-          
+
           print(isRegistered);
-          Navigator.of(context).pushReplacementNamed('/logIn_Page');
         }
         print("==============================");
-
-        //print("$firstName :: $lastName :: $phoneNumber :: $storeName :: $adress :: $email :: $password");
-        /* Navigator.push(
-            context, MaterialPageRoute(builder: (context) => accType()));
-        print("taped");*/
       },
       child: Padding(
         padding: const EdgeInsets.all(24.0),
