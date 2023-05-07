@@ -28,8 +28,9 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      
       onWillPop: () async {
-        return false; // this will stop or block going back to the previous page
+        return accountType !=Account.guest? false : true; // this will stop or block going back to the previous page
       },
       child: Scaffold(
         backgroundColor: Color(0xffE7E7E7),

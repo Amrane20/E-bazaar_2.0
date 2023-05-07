@@ -29,6 +29,7 @@ import 'package:flutter_application_1/seller/seller_setting_page.dart';
 import 'package:flutter_application_1/seller/seller_sign_up.dart';
 import 'package:flutter_application_1/seller/upload_product.dart';
 import 'package:flutter_application_1/tes.dart';
+import 'package:flutter_application_1/widget/error.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 

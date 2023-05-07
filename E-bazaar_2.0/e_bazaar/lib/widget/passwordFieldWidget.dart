@@ -5,14 +5,17 @@ import '../accountType.dart';
 import '../buyer/buyer_sign_up.dart';
 import '../seller/seller_sign_up.dart';
 
-
-
 String? password;
+
 class passwordField extends StatefulWidget {
   final Color borderColor;
   final Color lableTxtColor;
   final inputStyle;
-  const passwordField({super.key, this.borderColor = Colors.white54,this.lableTxtColor =Colors.white54,this.inputStyle});
+  const passwordField(
+      {super.key,
+      this.borderColor = Colors.white54,
+      this.lableTxtColor = Colors.white54,
+      this.inputStyle});
 
   @override
   State<passwordField> createState() => _passwordFieldState();
@@ -22,21 +25,19 @@ class _passwordFieldState extends State<passwordField> {
   bool visiblePass = true;
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.fromLTRB(26.0, 0, 26.0, 0),
       child: TextFormField(
         style: widget.inputStyle,
         obscureText: visiblePass == true ? true : false,
         onSaved: (newValue) {
-          accountType==  Account.seller ? seller.password = newValue : buyer.password = newValue;
+          accountType == Account.seller
+              ? seller.password = newValue
+              : buyer.password = newValue;
           password = newValue;
         },
         validator: (value) {
-          if(value!.isNotEmpty) {
-            if(value.length < 6) {
-              return "the password should be greater than 6 chars";
-            }
-          } else {
+          if (value!.isEmpty) {
             return "the field cannot be empty";
           }
         },
@@ -49,8 +50,13 @@ class _passwordFieldState extends State<passwordField> {
                 });
                 print(visiblePass);
               },
-              icon: visiblePass == true ? Icon( Icons.visibility_off,) : Icon( Icons.visibility,),
-             
+              icon: visiblePass == true
+                  ? Icon(
+                      Icons.visibility_off,
+                    )
+                  : Icon(
+                      Icons.visibility,
+                    ),
               color: Color(0xff6F5243),
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 24.0),

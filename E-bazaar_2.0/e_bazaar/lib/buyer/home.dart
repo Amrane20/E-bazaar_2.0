@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/accountType.dart';
 import 'package:flutter_application_1/buyer/buyer_history.dart';
 import 'package:flutter_application_1/buyer/buyer_setting_Page.dart';
 import 'package:flutter_application_1/buyer/favorites.dart';
@@ -29,8 +30,8 @@ class _buyerHomeState extends State<buyerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[_currentPageIndex],
-      bottomNavigationBar: Container(
+      body: accountType==Account.buyer ? screens[_currentPageIndex] : homePage(),
+      bottomNavigationBar: accountType==Account.buyer ? Container(
         color: Color(0xffD9D9D9),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
@@ -80,7 +81,7 @@ class _buyerHomeState extends State<buyerHome> {
             ],
           ),
         ),
-      ),
+      ) : null,
     );
   }
 }

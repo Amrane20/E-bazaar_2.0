@@ -88,7 +88,7 @@ class accType extends StatelessWidget {
           InkWell(
             onTap: () {
               accountType = Account.guest;
-              Navigator.of(context).pushNamed('/home_page');
+              Navigator.of(context).pushNamed('/buyer_home_page');
               print(accountType);
             },
             child: Row(

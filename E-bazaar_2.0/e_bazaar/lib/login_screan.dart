@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/accountType.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_application_1/buyer/buyer_sign_up.dart';
 import 'package:flutter_application_1/seller/seller_sign_up.dart';
 import 'package:flutter_application_1/widget/call_a_btn.dart';
 import 'package:flutter_application_1/widget/emailFieldWidget.dart';
+import 'package:flutter_application_1/widget/error.dart';
 import 'package:flutter_application_1/widget/passwordFieldWidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -33,9 +35,11 @@ signIn() async {
       return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        // print('No user found for that email.');
+        showCustomSnackBar(dialogContext,"No user for that email.");
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+       // print('Wrong password provided for that user.');
+        showCustomSnackBar(dialogContext,"Wrong password.");
       }
     }
   }

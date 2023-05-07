@@ -8,6 +8,7 @@ import 'package:flutter_application_1/models/seller_model.dart';
 import 'package:flutter_application_1/widget/PhoneNumberFieldwidget.dart';
 import 'package:flutter_application_1/widget/adressFieldWidget.dart';
 import 'package:flutter_application_1/widget/emailFieldWidget.dart';
+import 'package:flutter_application_1/widget/error.dart';
 import 'package:flutter_application_1/widget/firsNameFiledWidget.dart';
 import 'package:flutter_application_1/widget/joinUsBtn.dart';
 import 'package:flutter_application_1/widget/lastNameFieldWidget.dart';
@@ -46,9 +47,11 @@ buyer_signUp() async {
       return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+       // print('The password provided is too weak.');
+       showCustomSnackBar(dialogContext,"Use strong password.");
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+       // print('The account already exists for that email.');
+       showCustomSnackBar(dialogContext,"This account already exists.");
       }
     } catch (e) {
       print(e);

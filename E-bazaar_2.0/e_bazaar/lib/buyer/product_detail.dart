@@ -71,7 +71,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             child: IconButton(
                                 onPressed: () {
                                   Navigator.of(context)
-                                      .pushNamed('/buyer_home_page');
+                                      .pushNamed('/buyer_home_page'); 
                                 },
                                 icon: Icon(Icons.arrow_back))),
                       ),

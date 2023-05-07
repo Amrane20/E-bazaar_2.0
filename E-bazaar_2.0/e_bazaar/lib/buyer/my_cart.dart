@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'myCartProduct.dart';
 
-
-
 class myCartPage extends StatefulWidget {
   const myCartPage({super.key});
 
@@ -26,6 +24,7 @@ class _myCartPageState extends State<myCartPage> {
         ),
         centerTitle: true,
         elevation: 0,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -35,7 +34,7 @@ class _myCartPageState extends State<myCartPage> {
               Container(
                 //color: Colors.white,
                 width: double.infinity,
-                height:  MediaQuery.of(context).size.height * 0.55 ,
+                height: MediaQuery.of(context).size.height * 0.55,
                 child: ListView(
                   physics: BouncingScrollPhysics(),
                   children: [
@@ -50,7 +49,7 @@ class _myCartPageState extends State<myCartPage> {
                 ),
               ),
               Visibility(
-                visible:  true,
+                visible: true,
                 child: Container(
                   margin: EdgeInsets.only(top: 10.0),
                   width: double.infinity,
