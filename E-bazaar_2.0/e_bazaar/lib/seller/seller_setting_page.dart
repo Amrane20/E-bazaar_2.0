@@ -21,6 +21,7 @@ class sellerSettingPage extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 0,
+        automaticallyImplyLeading: false, //to hide the back arrow
       ),
       body: ListView(
         physics: BouncingScrollPhysics(),

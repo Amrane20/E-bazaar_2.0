@@ -33,7 +33,11 @@ class _uploadPageState extends State<uploadPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffE7E7E7),
-      appBar: AppBar(backgroundColor: Color(0xffE7E7E7), elevation: 0),
+      appBar: AppBar(
+        backgroundColor: Color(0xffE7E7E7),
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [

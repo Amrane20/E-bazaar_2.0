@@ -67,7 +67,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(50.0)),
-                        child: Center(child: Icon(Icons.arrow_back)),
+                        child: Center(
+                            child: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/buyer_home_page');
+                                },
+                                icon: Icon(Icons.arrow_back))),
                       ),
                     ),
                     Text(

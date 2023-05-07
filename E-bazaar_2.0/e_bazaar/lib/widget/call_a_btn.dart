@@ -7,10 +7,15 @@ import 'package:flutter_application_1/widget/emailFieldWidget.dart';
 import 'package:flutter_application_1/widget/passwordFieldWidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class callActionBtn extends StatelessWidget {
+class callActionBtn extends StatefulWidget {
   final btnTxt;
   const callActionBtn({super.key, required this.btnTxt});
 
+  @override
+  State<callActionBtn> createState() => _callActionBtnState();
+}
+
+class _callActionBtnState extends State<callActionBtn> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,11 +42,12 @@ class callActionBtn extends StatelessWidget {
             print(response.user!.uid);
             print(accountType);
             print("=============");
+
           }
         },
         child: Padding(
           padding: const EdgeInsets.all(13.0),
-          child: Text(btnTxt,
+          child: Text(widget.btnTxt,
               style: GoogleFonts.montserrat(
                   fontSize: 16.0, fontWeight: FontWeight.w500)),
         ),

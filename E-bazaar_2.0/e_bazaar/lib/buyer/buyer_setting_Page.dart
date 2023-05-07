@@ -30,6 +30,7 @@ class buyerSettingsPage extends StatelessWidget {
           ),
           centerTitle: true,
           elevation: 0,
+          automaticallyImplyLeading: false,
         ),
         body: ListView(
           physics: BouncingScrollPhysics(),

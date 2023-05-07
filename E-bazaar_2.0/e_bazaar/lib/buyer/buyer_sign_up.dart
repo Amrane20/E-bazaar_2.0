@@ -20,9 +20,10 @@ GlobalKey<FormState> buyerFormState = new GlobalKey<FormState>();
 GlobalKey<ScaffoldState> buyerScaffold = GlobalKey<ScaffoldState>();
 Buyer buyer = new Buyer();
 
-
 buyer_signUp() async {
-    BuildContext? dialogContext = accountType == Account.buyer? buyerScaffold.currentContext : scaffoldKey.currentContext ;
+  BuildContext? dialogContext = accountType == Account.buyer
+      ? buyerScaffold.currentContext
+      : scaffoldKey.currentContext;
   showDialog(
     context: dialogContext!,
     builder: (context) {
@@ -52,7 +53,6 @@ buyer_signUp() async {
     } catch (e) {
       print(e);
     }
-    
   } else {
     print("not valide");
   }
@@ -69,7 +69,7 @@ createBuyerDocument() async {
       'phoneNumber': buyer.phoneNumber, // Stokes and Sons
       'firstName': buyer.firstName, // 42
       'lastName': buyer.lastName,
-      'location' : buyer.location,
+      'location': buyer.location,
     };
     await buyerRef.doc(buyerID).set(buyerData);
     print('New Buyer created with ID: $buyerID');
@@ -78,7 +78,6 @@ createBuyerDocument() async {
   }
 }
 
-
 class buyerSignUpPage extends StatelessWidget {
   const buyerSignUpPage({
     super.key,
@@ -86,7 +85,7 @@ class buyerSignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      var myInputStyle = GoogleFonts.lato(fontSize: 16, color: Colors.white54);
+    var myInputStyle = GoogleFonts.lato(fontSize: 16, color: Colors.white54);
     return Scaffold(
       key: buyerScaffold,
       body: Container(
@@ -112,7 +111,10 @@ class buyerSignUpPage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              firstNameField(inputStyle: myInputStyle,),
+             
+              firstNameField(
+                inputStyle: myInputStyle,
+              ),
               SizedBox(
                 height: 24.0,
               ),
@@ -133,7 +135,7 @@ class buyerSignUpPage extends StatelessWidget {
                 height: 24.0,
               ),
               passwordField(inputStyle: myInputStyle),
-        
+
               // the join us button
               joinUsButton(),
               Row(

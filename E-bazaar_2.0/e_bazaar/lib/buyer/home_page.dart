@@ -85,8 +85,8 @@ class _homePageState extends State<homePage> {
                                   hintText: "search ...",
                                   fillColor: Colors.white,
                                   filled: true,
-                                  prefixIcon: Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
+                                  prefixIcon: const Padding(
+                                    padding:  EdgeInsets.only(left: 10.0),
                                     child: Icon(
                                       Icons.search,
                                       color: Color(0xff212121),
@@ -94,7 +94,7 @@ class _homePageState extends State<homePage> {
                                     ),
                                   ),
                                   // border: UndelineInputBorder()
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 0, horizontal: 24.0),
                                   // the enabled state of the searche field
                                   enabledBorder: OutlineInputBorder(

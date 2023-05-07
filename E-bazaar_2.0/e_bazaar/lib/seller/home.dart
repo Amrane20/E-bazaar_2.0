@@ -71,9 +71,13 @@ class _sellerHomeState extends State<sellerHome> {
                   text: "Logout",
                   onPressed: () async {
                     print("taped");
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushReplacementNamed('/logIn_Page');
+                    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                     await getUser();
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.of(context)
+                        .pushReplacementNamed('/Acc_type_page');
+                    await getUser();
+                    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                   }),
             ],
           ),

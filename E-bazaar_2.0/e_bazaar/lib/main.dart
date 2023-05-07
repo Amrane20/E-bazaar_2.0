@@ -12,7 +12,7 @@ import 'package:flutter_application_1/buyer/favorites.dart';
 import 'package:flutter_application_1/buyer/history_test.dart';
 import 'package:flutter_application_1/buyer/home.dart';
 import 'package:flutter_application_1/buyer/placing_order_page.dart';
-import 'package:flutter_application_1/buyer/home_page.dart' ;
+import 'package:flutter_application_1/buyer/home_page.dart';
 import 'package:flutter_application_1/firebase_testing.dart';
 import 'package:flutter_application_1/intro1.dart';
 import 'package:flutter_application_1/login_screan.dart';
@@ -32,21 +32,21 @@ import 'package:flutter_application_1/tes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp( MaterialApp(
+  runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: accType(),
     routes: {
-      '/home_page' :(BuildContext context) => homePage(),
-       '/seller_signUp_Page' :(BuildContext context) => sellerSignUpPage(),
-       '/logIn_Page' :(BuildContext context) => loginPage(),
-       '/Acc_type_page' :(BuildContext context) => accType(),
-       '/seller_home_page' :(BuildContext context) => sellerHome(),
-       '/buyer_home_page' :(BuildContext context) => buyerHome(),
+      '/home_page': (BuildContext context) => homePage(),
+      '/seller_signUp_Page': (BuildContext context) => sellerSignUpPage(),
+      '/logIn_Page': (BuildContext context) => loginPage(),
+      '/Acc_type_page': (BuildContext context) => accType(),
+      '/seller_home_page': (BuildContext context) => sellerHome(),
+      '/buyer_home_page': (BuildContext context) => buyerHome(),
+      '/myApp_page': (BuildContext context) => MyApp(),
     },
-
   ));
 }
 
@@ -63,10 +63,10 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: LiquidSwipe(
-        enableLoop: false, // defaoult value true 
-        slideIconWidget: Icon(
+        enableLoop: false, // defaoult value true
+        slideIconWidget: const Icon(
           Icons.arrow_back_ios,
-          color: Colors.white54,
+          color: Color(0xffE7E7E7),
           size: 40,
         ),
         positionSlideIcon: 0.825,

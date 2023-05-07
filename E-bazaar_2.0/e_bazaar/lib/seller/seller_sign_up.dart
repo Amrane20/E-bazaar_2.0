@@ -14,6 +14,8 @@ import 'package:flutter_application_1/widget/passwordFieldWidget.dart';
 import 'package:flutter_application_1/widget/storeFieldWidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../buyer/buyer_sign_up.dart';
+
 GlobalKey<FormState> formState = new GlobalKey<FormState>();
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 Seller seller = new Seller();
@@ -121,6 +123,7 @@ class _sellerSignUpPageState extends State<sellerSignUpPage> {
                   fit: BoxFit.cover,
                 ),
               ),
+
               firstNameField(
                 inputStyle: inputStyle,
               ),
